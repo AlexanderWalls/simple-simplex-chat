@@ -1765,6 +1765,8 @@
   <string name="database_downgrade">Database downgrade</string>
   <string name="incompatible_database_version">Incompatible database version</string>
   <string name="confirm_database_upgrades">Confirm database upgrades</string>
+  <string name="simple_mode">Simple mode</string>
+  <string name="simple_mode_footer">Hide advanced options: multiple profiles, incognito, chat preferences, network and server settings, and custom themes. You can always turn this off.</string>
   <string name="one_hand_ui">Reachable app toolbars</string>
   <string name="chat_bottom_bar">Reachable chat toolbar</string>
   <string name="one_hand_ui_bottom_bar">Bottom bar</string>

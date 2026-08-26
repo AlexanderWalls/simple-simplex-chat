@@ -1291,17 +1291,20 @@ private fun TagsView(searchText: MutableState<TextFieldValue>) {
         }
       }
 
-    if (userTags.value.isEmpty()) {
-      Row(rowSizeModifier.clip(shape = CircleShape).then(plusClickModifier).padding(start = 2.dp, top = 4.dp, end = 6.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-        Icon(painterResource(MR.images.ic_add), stringResource(MR.strings.chat_list_add_list), Modifier.size(18.sp.toDp()), tint = MaterialTheme.colors.secondary)
-        Spacer(Modifier.width(2.dp))
-        Text(stringResource(MR.strings.chat_list_add_list), color = MaterialTheme.colors.secondary, fontSize = 15.sp)
-      }
-    } else {
-      Box(rowSizeModifier, contentAlignment = Alignment.Center) {
-        Icon(
-          painterResource(MR.images.ic_add), stringResource(MR.strings.chat_list_add_list), Modifier.clip(shape = CircleShape).then(plusClickModifier).padding(2.dp), tint = MaterialTheme.colors.secondary
-        )
+    val hideListCreation = userTags.value.isEmpty() && chatModel.controller.appPrefs.simpleMode.state.value && appPlatform.isAndroid
+    if (!hideListCreation) {
+      if (userTags.value.isEmpty()) {
+        Row(rowSizeModifier.clip(shape = CircleShape).then(plusClickModifier).padding(start = 2.dp, top = 4.dp, end = 6.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+          Icon(painterResource(MR.images.ic_add), stringResource(MR.strings.chat_list_add_list), Modifier.size(18.sp.toDp()), tint = MaterialTheme.colors.secondary)
+          Spacer(Modifier.width(2.dp))
+          Text(stringResource(MR.strings.chat_list_add_list), color = MaterialTheme.colors.secondary, fontSize = 15.sp)
+        }
+      } else {
+        Box(rowSizeModifier, contentAlignment = Alignment.Center) {
+          Icon(
+            painterResource(MR.images.ic_add), stringResource(MR.strings.chat_list_add_list), Modifier.clip(shape = CircleShape).then(plusClickModifier).padding(2.dp), tint = MaterialTheme.colors.secondary
+          )
+        }
       }
     }
   }

@@ -394,6 +394,10 @@ fun createProfileOnboarding(chatModel: ChatModel, displayName: String, close: ()
     chatModel.localUserCreated.value = true
     // new users don't need the local file encryption indicator (all files are encrypted); existing users keep it on
     chatModel.controller.appPrefs.privacyShowEncryption.set(false)
+    // simple mode trades the relay-approval prompt for a smoother file-receiving experience; the toggle stays visible for anyone who wants it back on
+    if (chatModel.controller.appPrefs.simpleMode.get() && appPlatform.isAndroid) {
+      chatModel.controller.appPrefs.privacyAskToApproveRelays.set(false)
+    }
     val onboardingStage = chatModel.controller.appPrefs.onboardingStage
     // No users or no visible users
     if (chatModel.users.none { u -> !u.user.hidden }) {

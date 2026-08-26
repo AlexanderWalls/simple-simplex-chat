@@ -91,6 +91,7 @@ fun SettingsLayout(
     hideKeyboard(view)
   }
   val notificationsMode = remember { chatModel.controller.appPrefs.notificationsMode.state }
+  val simpleMode = remember { appPrefs.simpleMode.state }.value && appPlatform.isAndroid
   ColumnWithScrollBar {
     AppBarTitle(stringResource(MR.strings.your_settings))
 
@@ -104,24 +105,15 @@ fun SettingsLayout(
     SectionDividerSpaced()
 
     SectionView(stringResource(MR.strings.advanced_settings)) {
-      SettingsActionItem(painterResource(MR.images.ic_wifi_tethering), stringResource(MR.strings.network_and_servers), showCustomModal { _, close -> NetworkAndServersView(close) }, disabled = stopped)
+      if (!simpleMode) {
+        SettingsActionItem(painterResource(MR.images.ic_wifi_tethering), stringResource(MR.strings.network_and_servers), showCustomModal { _, close -> NetworkAndServersView(close) }, disabled = stopped)
+      }
       if (appPlatform == AppPlatform.ANDROID) {
         SettingsActionItem(painterResource(if (notificationsMode.value == NotificationsMode.OFF) MR.images.ic_bolt_off else MR.images.ic_bolt), stringResource(MR.strings.notifications), showSettingsModal { NotificationsSettingsView(it) }, disabled = stopped)
       }
       SettingsActionItem(painterResource(MR.images.ic_videocam), stringResource(MR.strings.settings_audio_video_calls), showSettingsModal { CallSettingsView(it, showModal) }, disabled = stopped)
       AppShutdownItem()
       AppVersionItem(showVersion)
-    }
-
-    if (crowdfundingAvailable()) {
-      SectionDividerSpaced()
-      SectionView(stringResource(MR.strings.v7_0_invest)) {
-        SettingsActionItem(
-          painterResource(MR.images.ic_redeem),
-          stringResource(MR.strings.v7_0_crowdfunding),
-          { ModalManager.start.showModalCloseable(cardScreen = true) { close -> GetStakeView(fromSettings = true, close = close) } }
-        )
-      }
     }
     SectionBottomSpacer()
   }

@@ -40,7 +40,9 @@ fun CallSettingsLayout(
   ColumnWithScrollBar {
     AppBarTitle(stringResource(MR.strings.your_calls))
     SectionView(stringResource(MR.strings.settings_section_title_settings)) {
-      SectionItemView(editIceServers) { Text(stringResource(MR.strings.webrtc_ice_servers)) }
+      if (!(ChatController.appPrefs.simpleMode.state.value && appPlatform.isAndroid)) {
+        SectionItemView(editIceServers) { Text(stringResource(MR.strings.webrtc_ice_servers)) }
+      }
 
       if (appPlatform.isAndroid) {
         val lockCallState = remember { mutableStateOf(callOnLockScreen.get()) }

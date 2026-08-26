@@ -38,6 +38,7 @@ fun ComposeContextProfilePickerView(
 ) {
   val selectedUser = remember { mutableStateOf(currentUser) }
   val incognitoDefault = chatModel.controller.appPrefs.incognito.get()
+  val simpleModeHidesIncognito = chatModel.controller.appPrefs.simpleMode.get() && appPlatform.isAndroid
   val users = chatModel.users.map { it.user }.filter { u -> u.activeUser || !u.hidden }
   val listExpanded = remember { mutableStateOf(false) }
 
@@ -233,7 +234,11 @@ fun ComposeContextProfilePickerView(
     ) {
       val otherUsers = users.filter { u -> u.userId != selectedUser.value.userId }.sortedByDescending { it.activeOrder }
 
-      if (incognitoDefault) {
+      if (simpleModeHidesIncognito) {
+        item {
+          ProfilePickerUserOption(selectedUser.value)
+        }
+      } else if (incognitoDefault) {
         item {
           IncognitoOption()
           Divider(

@@ -146,6 +146,7 @@ class AppPreferences {
   val chatLastStart = mkDatePreference(SHARED_PREFS_CHAT_LAST_START, null)
   val chatStopped = mkBoolPreference(SHARED_PREFS_CHAT_STOPPED, false)
   val developerTools = mkBoolPreference(SHARED_PREFS_DEVELOPER_TOOLS, false)
+  val simpleMode = mkBoolPreference(SHARED_PREFS_SIMPLE_MODE, true)
   val logLevel = mkEnumPreference(SHARED_PREFS_LOG_LEVEL, LogLevel.WARNING) { LogLevel.entries.firstOrNull { it.name == this } }
   val showInternalErrors = mkBoolPreference(SHARED_PREFS_SHOW_INTERNAL_ERRORS, false)
   val showSlowApiCalls = mkBoolPreference(SHARED_PREFS_SHOW_SLOW_API_CALLS, false)
@@ -431,6 +432,7 @@ class AppPreferences {
     private const val SHARED_PREFS_CHAT_LAST_START = "ChatLastStart"
     private const val SHARED_PREFS_CHAT_STOPPED = "ChatStopped"
     private const val SHARED_PREFS_DEVELOPER_TOOLS = "DeveloperTools"
+    private const val SHARED_PREFS_SIMPLE_MODE = "SimpleMode"
     private const val SHARED_PREFS_LOG_LEVEL = "LogLevel"
     private const val SHARED_PREFS_SHOW_INTERNAL_ERRORS = "ShowInternalErrors"
     private const val SHARED_PREFS_SHOW_SLOW_API_CALLS = "ShowSlowApiCalls"
@@ -8288,6 +8290,7 @@ data class AppSettings(
   var connectRemoteViaMulticast: Boolean? = null,
   var connectRemoteViaMulticastAuto: Boolean? = null,
   var developerTools: Boolean? = null,
+  var simpleMode: Boolean? = null,
   var confirmDBUpgrades: Boolean? = null,
   var androidCallOnLockScreen: AppSettingsLockScreenCalls? = null,
   var iosCallKitEnabled: Boolean? = null,
@@ -8325,6 +8328,7 @@ data class AppSettings(
     if (connectRemoteViaMulticast != def.connectRemoteViaMulticast) { empty.connectRemoteViaMulticast = connectRemoteViaMulticast }
     if (connectRemoteViaMulticastAuto != def.connectRemoteViaMulticastAuto) { empty.connectRemoteViaMulticastAuto = connectRemoteViaMulticastAuto }
     if (developerTools != def.developerTools) { empty.developerTools = developerTools }
+    if (simpleMode != def.simpleMode) { empty.simpleMode = simpleMode }
     if (confirmDBUpgrades != def.confirmDBUpgrades) { empty.confirmDBUpgrades = confirmDBUpgrades }
     if (androidCallOnLockScreen != def.androidCallOnLockScreen) { empty.androidCallOnLockScreen = androidCallOnLockScreen }
     if (iosCallKitEnabled != def.iosCallKitEnabled) { empty.iosCallKitEnabled = iosCallKitEnabled }
@@ -8373,6 +8377,7 @@ data class AppSettings(
     connectRemoteViaMulticast?.let { def.connectRemoteViaMulticast.set(it) }
     connectRemoteViaMulticastAuto?.let { def.connectRemoteViaMulticastAuto.set(it) }
     developerTools?.let { def.developerTools.set(it) }
+    simpleMode?.let { def.simpleMode.set(it) }
     confirmDBUpgrades?.let { def.confirmDBUpgrades.set(it) }
     androidCallOnLockScreen?.let { def.callOnLockScreen.set(it.toCallOnLockScreen()) }
     iosCallKitEnabled?.let { def.iosCallKitEnabled.set(it) }
@@ -8411,6 +8416,7 @@ data class AppSettings(
         connectRemoteViaMulticast = true,
         connectRemoteViaMulticastAuto = true,
         developerTools = false,
+        simpleMode = true,
         confirmDBUpgrades = false,
         androidCallOnLockScreen = AppSettingsLockScreenCalls.SHOW,
         iosCallKitEnabled = true,
@@ -8450,6 +8456,7 @@ data class AppSettings(
           connectRemoteViaMulticast = def.connectRemoteViaMulticast.get(),
           connectRemoteViaMulticastAuto = def.connectRemoteViaMulticastAuto.get(),
           developerTools = def.developerTools.get(),
+          simpleMode = def.simpleMode.get(),
           confirmDBUpgrades = def.confirmDBUpgrades.get(),
           androidCallOnLockScreen = AppSettingsLockScreenCalls.from(def.callOnLockScreen.get()),
           iosCallKitEnabled = def.iosCallKitEnabled.get(),

@@ -240,6 +240,7 @@ fun MorePrivacyView(chatModel: ChatModel) {
         }
       }
 
+      if (!(appPrefs.simpleMode.state.value && appPlatform.isAndroid)) {
       SectionDividerSpaced()
       DeliveryReceiptsSection(
         currentUser = currentUser,
@@ -274,6 +275,7 @@ fun MorePrivacyView(chatModel: ChatModel) {
           }
         }
       )
+      }
     }
     SectionBottomSpacer()
   }
@@ -678,7 +680,7 @@ fun SimplexLockView(
         }
       }
     }
-    if (performLA.value && laMode.value == LAMode.PASSCODE) {
+    if (performLA.value && laMode.value == LAMode.PASSCODE && !(remember { appPrefs.simpleMode.state }.value && appPlatform.isAndroid)) {
       SectionDividerSpaced()
       SectionView(stringResource(MR.strings.self_destruct_passcode)) {
         val openInfo = {

@@ -589,22 +589,24 @@ object AppearanceScope {
         }
         saveThemeToDatabase(null)
       }
-      SectionItemView(click = {
-        val user = themeUserDestination.value
-        if (user == null) {
-          ModalManager.start.showModal(cardScreen = true) {
-            val importWallpaperLauncher = rememberFileChooserLauncher(true) { to: URI? ->
-              if (to != null) onImport(to)
+      if (!(appPrefs.simpleMode.state.value && appPlatform.isAndroid)) {
+        SectionItemView(click = {
+          val user = themeUserDestination.value
+          if (user == null) {
+            ModalManager.start.showModal(cardScreen = true) {
+              val importWallpaperLauncher = rememberFileChooserLauncher(true) { to: URI? ->
+                if (to != null) onImport(to)
+              }
+              CustomizeThemeView { onChooseType(it, importWallpaperLauncher) }
             }
-            CustomizeThemeView { onChooseType(it, importWallpaperLauncher) }
+          } else {
+            ModalManager.start.showModalCloseable(cardScreen = true) { close ->
+              UserWallpaperEditorModal(chatModel.remoteHostId(), user.first, close)
+            }
           }
-        } else {
-          ModalManager.start.showModalCloseable(cardScreen = true) { close ->
-            UserWallpaperEditorModal(chatModel.remoteHostId(), user.first, close)
-          }
+        }) {
+          Text(stringResource(MR.strings.customize_theme_title))
         }
-      }) {
-        Text(stringResource(MR.strings.customize_theme_title))
       }
     }
   }

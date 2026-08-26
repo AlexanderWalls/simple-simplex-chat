@@ -157,6 +157,7 @@ fun SendMsgView(
               && updateLiveMessage != null
               && (cs.preview !is ComposePreview.VoicePreview || !stopRecOnNextClick.value)
               && cs.contextItem is ComposeContextItem.NoContextItem
+              && !(ChatController.appPrefs.simpleMode.state.value && appPlatform.isAndroid)
             ) {
               Spacer(Modifier.width(12.dp))
               StartLiveMessageButton {
@@ -185,7 +186,8 @@ fun SendMsgView(
               if (
                 cs.preview !is ComposePreview.VoicePreview &&
                 cs.contextItem is ComposeContextItem.NoContextItem &&
-                sendLiveMessage != null && updateLiveMessage != null
+                sendLiveMessage != null && updateLiveMessage != null &&
+                !(ChatController.appPrefs.simpleMode.state.value && appPlatform.isAndroid)
               ) {
                 menuItems.add {
                   ItemAction(

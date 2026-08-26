@@ -542,7 +542,8 @@ private fun InviteView(rhId: Long?, connLinkInvitation: CreatedConnLink, contact
                   search = search,
                   close = close,
                   rhId = rhId,
-                  contactConnection = contactConnection.value
+                  contactConnection = contactConnection.value,
+                  showIncognito = !(appPrefs.simpleMode.state.value && appPlatform.isAndroid)
                 )
               })
           }

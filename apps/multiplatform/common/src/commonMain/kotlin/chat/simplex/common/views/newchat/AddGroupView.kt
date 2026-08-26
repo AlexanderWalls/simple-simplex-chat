@@ -167,7 +167,9 @@ fun AddGroupLayout(
             disabled = !canCreateProfile(displayName.value)
           )
 
-          IncognitoToggle(incognitoPref, incognito) { ModalManager.start.showModal { IncognitoView() } }
+          if (!(ChatController.appPrefs.simpleMode.state.value && appPlatform.isAndroid)) {
+            IncognitoToggle(incognitoPref, incognito) { ModalManager.start.showModal { IncognitoView() } }
+          }
 
           SectionTextFooter(
             buildAnnotatedString {

@@ -111,7 +111,9 @@ fun AppearanceScope.AppearanceLayout(
       if (remember { appPrefs.oneHandUI.state }.value) {
         SettingsPreferenceItem(icon = null, stringResource(MR.strings.chat_bottom_bar), ChatModel.controller.appPrefs.chatBottomBar)
       }
+      SettingsPreferenceItem(icon = null, stringResource(MR.strings.simple_mode), ChatModel.controller.appPrefs.simpleMode)
     }
+    SectionTextFooter(stringResource(MR.strings.simple_mode_footer))
 
     SectionDividerSpaced()
     ThemesSection(systemDarkTheme)

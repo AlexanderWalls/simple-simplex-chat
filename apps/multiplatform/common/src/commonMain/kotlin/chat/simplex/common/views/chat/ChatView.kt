@@ -1211,7 +1211,7 @@ fun BoxScope.ChatInfoToolbar(
   val menuItems = arrayListOf<@Composable () -> Unit>()
   val activeCall by remember { chatModel.activeCall }
 
-  val showContentFilterButton = availableContent.value.isNotEmpty()
+  val showContentFilterButton = availableContent.value.isNotEmpty() && !(ChatController.appPrefs.simpleMode.state.value && appPlatform.isAndroid)
   val canStartCall = chatInfo is ChatInfo.Direct &&
     chatInfo.contact.mergedPreferences.calls.enabled.forUser &&
     chatInfo.contact.ready &&
